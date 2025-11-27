@@ -13,6 +13,6 @@ void main(){
   double piezasPorLam = areaLam / consumoPieza;
   double desperdicio = areaLam % consumoPieza;
 
-  print("Con una lámina se pueden fabricar: ${piezasPorLam.floor()} piezas");
+  print("Con una lamina se pueden fabricar: ${piezasPorLam.floor()} piezas");
   print("El desperdicio será de: $desperdicio metros cuadrados");
 }
