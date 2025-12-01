@@ -109,7 +109,7 @@ void main() {
           continue;
         }
 
-        print("\n=== RECIBO DEL CLIENTE ===");
+        print("\nRECIBO DEL CLIENTE-----------");
         print("Código: ${c.codigo}");
         print("Nombre: ${c.nombre}");
         print("Dirección: ${c.direccion}");
