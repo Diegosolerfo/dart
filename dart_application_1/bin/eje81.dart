@@ -130,8 +130,7 @@ void main() {
 
   edo.ciudades.add(c1);
   edo.ciudades.add(c2);
-
-  print("====== INFORME POR CIUDAD ======\n");
+  
   for (var ciudad in edo.ciudades) {
     print("Ciudad: ${ciudad.nombre} (${ciudad.codigo})");
     print("Total unidades vendidas: ${ciudad.totalUnidades}");
@@ -143,7 +142,6 @@ void main() {
     print("---------------------------------\n");
   }
 
-  print("====== INFORME POR ESTADO ======\n");
   print("Estado: ${edo.nombre} (${edo.codigo})");
   print("Monto neto total vendido: ${edo.montoNeto}");
   print("Porcentaje ciudades NO cumplieron: ${edo.porcentajeCiudadesNoCumplieron()}%");

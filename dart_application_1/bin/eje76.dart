@@ -27,12 +27,12 @@ void main() {
       }
 
       double promedioMateria = sumaCalificaciones / 3;
-      print("El promedio de $materia es: ${promedioMateria.toStringAsFixed(2)}");
+      print("El promedio de $materia es: ${promedioMateria}");
       sumaPromediosAlumno += promedioMateria;
     }
 
     double promedioAlumno = sumaPromediosAlumno / cantidadMaterias;
-    print("El promedio del alumno $nombre es: ${promedioAlumno.toStringAsFixed(2)}");
+    print("El promedio del alumno $nombre es: ${promedioAlumno}");
 
   }
 }

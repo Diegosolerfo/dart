@@ -14,9 +14,9 @@ void main() {
   int contadorErrores = 0;
 
   while (true) {
-    print("Ingrese la temperatura máxima del día (0 para terminar): ");
+    print("Ingrese la temperatura máxima del día: ");
     double tempMax = double.parse(stdin.readLineSync()!);
-    print("Ingrese la temperatura mínima del día (0 para terminar): ");
+    print("Ingrese la temperatura mínima del día: ");
     double tempMin = double.parse(stdin.readLineSync()!);
 
     if (tempMax == 0 && tempMin == 0) {
