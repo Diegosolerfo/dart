@@ -20,11 +20,11 @@ import 'dart:io';
 
 class Persona {
   int edad;
-  String educacion;
-  String situacion; 
-  String estado;    
-  String ciudad;    
-  String municipio; 
+  String educacion; // N, B, S, P
+  String situacion; // D, E
+  String estado;    // 2 dígitos
+  String ciudad;    // 4 dígitos
+  String municipio; // 6 dígitos
 
   Persona(this.edad, this.educacion, this.situacion,
       this.estado, this.ciudad, this.municipio);
@@ -34,6 +34,7 @@ void main() {
   List<Persona> personas = [];
 
   while (true) {
+    print("\n--- SISTEMA OCEI ---");
     print("1. Registrar persona");
     print("2. Reporte por municipio");
     print("3. Ciudades con más del 50% del grupo crítico");
@@ -126,8 +127,10 @@ void ciudades50(List<Persona> personas) {
 
   for (var p in personas) {
 
+    // total por ciudad
     totalCiudad[p.ciudad] = (totalCiudad[p.ciudad] ?? 0) + 1;
 
+    // críticos
     bool condicion = p.situacion == "D" &&
                      p.educacion == "N" &&
                      p.edad > 25;
@@ -142,7 +145,7 @@ void ciudades50(List<Persona> personas) {
     int crit = criticosCiudad[ciudad] ?? 0;
 
     if (total > 0 && (crit / total) > 0.5) {
-      print("Ciudad $ciudad -> ${((crit / total) * 100).toStringAsFixed(2)}%");
+      print("Ciudad $ciudad → ${((crit / total) * 100).toStringAsFixed(2)}%");
     }
   }
 }

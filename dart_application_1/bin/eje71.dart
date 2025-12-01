@@ -32,9 +32,9 @@ void main() {
     print("Digite el estado del orfanatorio del huerfano ${i+1}: ");
     String estado = stdin.readLineSync()!;
 
-    if(estado == 'tachira'){
+    if(estado.toLowerCase() == 'tachira'){
       contadorTachira++;
-    } else if(estado == 'distrito capital'){
+    } else if(estado.toLowerCase() == 'distrito capital'){
       contadorDistritoCapital++;
     }
 

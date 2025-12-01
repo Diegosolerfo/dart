@@ -21,14 +21,14 @@ esperado.
 */
 import 'dart:io';
 
-const double PVP1 = 100.0; 
-const double PVP2 = 150.0; 
-const double PVP3 = 200.0; 
+const double PVP1 = 100.0; // Precio de producto 1
+const double PVP2 = 150.0; // Precio de producto 2
+const double PVP3 = 200.0; // Precio de producto 3
 
 class PuntoVenta {
-	final int codigo; 
+	final int codigo; // 4 dígitos: dos primeros = sucursal
 	final int numVendedores;
-	final Map<int, int> unidadesPorProducto;
+	final Map<int, int> unidadesPorProducto; // clave: 1..3 => unidades
 
 	PuntoVenta(this.codigo, this.numVendedores, this.unidadesPorProducto);
 
@@ -38,53 +38,61 @@ class PuntoVenta {
 			(unidadesPorProducto[2]! * PVP2) +
 			(unidadesPorProducto[3]! * PVP3);
 
-  double get montoComision => montoBruto * 0.10;
+	double get montoComision => montoBruto * 0.10; // 10% de ventas brutas
 
+	// Monto neto de la venta que queda para la empresa (bruto - comisión)
 	double get montoNeto => montoBruto - montoComision;
 
 	int productoConMenosUnidades() {
+		// devuelve el código del producto (1..3) con menor número de unidades vendidas
 		var entries = unidadesPorProducto.entries.toList();
 		entries.sort((a, b) {
 			if (a.value != b.value) return a.value.compareTo(b.value);
-			return a.key.compareTo(b.key); 
+			return a.key.compareTo(b.key); // si empate, menor código
 		});
 		return entries.first.key;
 	}
 }
 
 class Sucursal {
-	final int codigo; 
+	final int codigo; // 2 dígitos
 	final String descripcion;
 	final double ventaEsperada;
 	final List<PuntoVenta> puntos;
 
 	Sucursal(this.codigo, this.descripcion, this.ventaEsperada, this.puntos);
 
-	double get montoTotalVendido =>	puntos.fold(0, (s, p) => s + p.montoNeto);
+	double get montoTotalVendido =>
+			puntos.fold(0.0, (s, p) => s + p.montoNeto); // sumamos montos netos
 
-	double get porcentajeAlcanzado =>	(ventaEsperada == 0) ? 0 : (montoTotalVendido / ventaEsperada) * 100;
+	double get porcentajeAlcanzado =>
+			(ventaEsperada == 0) ? 0.0 : (montoTotalVendido / ventaEsperada) * 100.0;
 
 	PuntoVenta puntoQueMasPagoComision() {
+		// retorna el punto que mayor monto pagó en comisiones
 		return puntos.reduce((a, b) => a.montoComision >= b.montoComision ? a : b);
 	}
 }
 
 void main() {
+	// Datos de ejemplo.
+	// Aquí puedes modificar o ampliar según el caso de prueba que necesites.
 	final sucursales = <Sucursal>[
-		Sucursal(10, 'Sucursal Norte', 50000, [
+		Sucursal(10, 'Sucursal Norte', 50000.0, [
 			PuntoVenta(1001, 5, {1: 40, 2: 10, 3: 5}),
 			PuntoVenta(1002, 4, {1: 10, 2: 20, 3: 15}),
 		]),
-		Sucursal(20, 'Sucursal Centro', 70000, [
+		Sucursal(20, 'Sucursal Centro', 70000.0, [
 			PuntoVenta(2001, 6, {1: 50, 2: 50, 3: 50}),
 			PuntoVenta(2002, 3, {1: 0, 2: 5, 3: 10}),
 			PuntoVenta(2003, 4, {1: 10, 2: 5, 3: 2}),
 		]),
-		Sucursal(30, 'Sucursal Sur', 30000, [
+		Sucursal(30, 'Sucursal Sur', 30000.0, [
 			PuntoVenta(3001, 2, {1: 20, 2: 0, 3: 0}),
 		]),
 	];
 
+	// Impresiones por punto de venta
 	print('--- Por punto de venta ---');
 	for (var suc in sucursales) {
 		for (var pv in suc.puntos) {
@@ -98,6 +106,7 @@ void main() {
 		}
 	}
 
+	// Por sucursal
 	print('--- Por sucursal ---');
 	for (var suc in sucursales) {
 		var puntoMaxCom = suc.puntoQueMasPagoComision();
@@ -108,10 +117,12 @@ void main() {
 		print('');
 	}
 
+	// Porcentaje de sucursales que alcanzaron el monto esperado
 	final alcanzaron = sucursales.where((s) => s.montoTotalVendido >= s.ventaEsperada).length;
 	final porcentajeAlcanzaron = (sucursales.isEmpty) ? 0.0 : (alcanzaron / sucursales.length) * 100.0;
 	print('Porcentaje de sucursales que alcanzaron el monto esperado: ${porcentajeAlcanzaron.toStringAsFixed(2)}%');
 
+	// Ejemplo de uso interactivo (opcional): preguntar si quiere ver detalle por sucursal
 	stdout.write('\n¿Desea ver un resumen por sucursal con puntos? (s/n): ');
 	var resp = stdin.readLineSync();
 	if (resp != null && resp.trim().toLowerCase() == 's') {
